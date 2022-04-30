@@ -122,7 +122,8 @@ def _determine_type(fh: BinaryIO) -> tuple:
 
 def process_file(fh: BinaryIO, stop_tag=DEFAULT_STOP_TAG,
                  details=True, strict=False, debug=False,
-                 truncate_tags=True, auto_seek=True):
+                 truncate_tags=True, auto_seek=True,
+                 xmp=True, clean=False):
     """
     Process an image file (expects an open file object).
 
@@ -169,8 +170,8 @@ def process_file(fh: BinaryIO, stop_tag=DEFAULT_STOP_TAG,
     # EXIF IFD
     exif_off = hdr.tags.get('Image ExifOffset')
     if exif_off:
-        logger.debug('Exif SubIFD at offset %s:', exif_off.values[0])
-        hdr.dump_ifd(exif_off.values[0], 'EXIF', stop_tag=stop_tag)
+        logger.debug('Exif SubIFD at offset %s:', exif_off.values)
+        hdr.dump_ifd(exif_off.values, 'EXIF', stop_tag=stop_tag)
 
     # deal with MakerNote contained in EXIF IFD
     # (Some apps use MakerNote tags but do not use a format for which we
@@ -195,4 +196,3 @@ def process_file(fh: BinaryIO, stop_tag=DEFAULT_STOP_TAG,
             xmp_bytes = _get_xmp(fh)
         if xmp_bytes:
             hdr.parse_xmp(xmp_bytes)
-    return hdr.tags

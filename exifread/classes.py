@@ -186,7 +186,10 @@ class ExifHeader:
                 value = self.s2n(offset, type_length, signed)
                 values.append(value)
                 offset = offset + type_length
-        return values
+        if len(values) == 1:
+            return values[0]
+        else:
+            return values
 
     def _process_field2(self, ifd_name, tag_name, count, offset):
         values = ''
@@ -252,10 +255,10 @@ class ExifHeader:
             values = self._process_field2(ifd_name, tag_name, count, offset)
         else:
             values = self._process_field(tag_name, count, field_type, type_length, offset)
-        # now 'values' is either a string or an array
+        # now 'values' is either a string, int/float, or array 
         # TODO: use only one type
         if count == 1 and field_type != 2:
-            printable = str(values[0])
+            printable = str(values)
         elif count > 50 and len(values) > 20 and not isinstance(values, str):
             if self.truncate_tags:
                 printable = str(values[0:20])[0:-1] + ', ... ]'
@@ -273,15 +276,18 @@ class ExifHeader:
                 elif isinstance(tag_entry[1], tuple):
                     ifd_info = tag_entry[1]
                     try:
-                        logger.debug('%s SubIFD at offset %d:', ifd_info[0], values[0])
-                        self.dump_ifd(values[0], ifd_info[0], tag_dict=ifd_info[1], stop_tag=stop_tag)
+                        logger.debug('%s SubIFD at offset %d:', ifd_info[0], values)
+                        self.dump_ifd(values, ifd_info[0], tag_dict=ifd_info[1], stop_tag=stop_tag)
                     except IndexError:
                         logger.warning('No values found for %s SubIFD', ifd_info[0])
                 else:
-                    printable = ''
-                    for val in values:
-                        # use lookup table for this tag
-                        printable += tag_entry[1].get(val, repr(val))
+                    try:
+                        printable = ''
+                        for val in values:
+                            # use lookup table for this tag
+                            printable += tag_entry[1].get(val, repr(val))
+                    except:
+                        printable = tag_entry[1].get(values, repr(values))
 
         self.tags[ifd_name + ' ' + tag_name] = IfdTag(
             printable, tag, field_type, values, field_offset, count * type_length
