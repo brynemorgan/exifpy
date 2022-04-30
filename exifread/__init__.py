@@ -12,6 +12,7 @@ from exifread.utils import ord_, make_string
 from exifread.heic import HEICExifFinder
 from exifread.jpeg import find_jpeg_exif
 from exifread.exceptions import InvalidExif, ExifNotFound
+from exifread.xmp import XMP
 
 __version__ = '3.0.0'
 
@@ -195,4 +196,22 @@ def process_file(fh: BinaryIO, stop_tag=DEFAULT_STOP_TAG,
         else:
             xmp_bytes = _get_xmp(fh)
         if xmp_bytes:
-            hdr.parse_xmp(xmp_bytes)
+            hdr.dump_xmp(xmp_bytes)
+    
+    if xmp:
+        # This doesn't find the bytes.
+        # # Easy we already have them
+        # xmp_tag = hdr.tags.get('Image ApplicationNotes')
+        # if xmp_tag:
+        #     logger.debug('XMP present in Exif')
+        #     xmp_bytes = bytes(xmp_tag.values)
+        # # We need to look in the entire file for the XML
+        # else:
+        xmp_bytes = _get_xmp(fh)
+        if xmp_bytes:
+            return hdr.parse_xmp(xmp_bytes)
+
+    if not clean:
+        return hdr.tags
+    else:
+        return hdr.clean_tags()

@@ -5,7 +5,7 @@ from typing import BinaryIO, Dict, Any
 from exifread.exif_log import get_logger
 from exifread.utils import Ratio
 from exifread.tags import EXIF_TAGS, DEFAULT_STOP_TAG, FIELD_TYPES, IGNORE_TAGS, makernote
-
+from exifread.xmp import XMP
 logger = get_logger()
 
 
@@ -592,7 +592,7 @@ class ExifHeader:
 
             self.tags['MakerNote ' + tag_name] = IfdTag(str(tag_value), 0, 0, tag_value, 0, 0)
 
-    def parse_xmp(self, xmp_bytes: bytes):
+    def dump_xmp(self, xmp_bytes: bytes):
         """Adobe's Extensible Metadata Platform, just dump the pretty XML."""
 
         import xml.dom.minidom  # pylint: disable=import-outside-toplevel
@@ -614,3 +614,27 @@ class ExifHeader:
             if line.strip():
                 cleaned.append(line)
         self.tags['Image ApplicationNotes'] = IfdTag('\n'.join(cleaned), 0, 1, xmp_bytes, 0, 0)
+
+
+    def clean_tags(self):
+        """
+        Returned cleaned dictionary with tag names (no ifd) as keys and printable
+
+        Returns
+        -------
+        _type_
+            _description_
+        """
+        
+        clean_tags = {k.split(' ')[1]: v.values for k,v in self.tags.items()}
+
+        return clean_tags
+    
+    def parse_xmp(self, xmp_bytes: bytes):
+
+        # Create XMP object
+        self.xmp = XMP(xmp_bytes)
+        # Get tags as dict
+        self.xmp_tags = {'XMP ' + k: v for k,v in self.xmp.tags.items()}
+        # Add to tags
+        return {**self.clean_tags(),**self.xmp_tags}
