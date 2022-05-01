@@ -59,7 +59,7 @@ GPS_INFO = (
 # Main Exif tag names
 EXIF_TAGS = {
     0x00FE: ('SubfileType', {
-        0x0: 'Full-resolution Image',
+        0x0: 'Full-resolution image',
         0x1: 'Reduced-resolution image',
         0x2: 'Single page of multi-page image',
         0x3: 'Single page of multi-page reduced-resolution image',
@@ -110,7 +110,25 @@ EXIF_TAGS = {
         65000: 'Kodak DCR Compressed',
         65535: 'Pentax PEF Compressed'
     }),
-    0x0106: ('PhotometricInterpretation', ),
+    0x0106: ('PhotometricInterpretation', {
+        0 : 'WhiteIsZero',
+        1 : 'BlackIsZero',
+        2 : 'RGB',
+        3 : 'RGB Palette',
+        4 : 'Transparency Mask',
+        5 : 'CMYK',
+        6 : 'YCbCr',
+        8 : 'CIELab',
+        9 : 'ICCLab',
+        10 : 'ITULab',
+        32803 : 'Color Filter Array',
+        32844 : 'Pixar LogL',
+        32845 : 'Pixar LogLuv',
+        32892 : 'Sequential Color Filter',
+        34892 : 'Linear Raw',
+        51177 : 'Depth Map',
+        52527 : 'Semantic Mask'
+    }),
     0x0107: ('Thresholding', ),
     0x0108: ('CellWidth', ),
     0x0109: ('CellLength', ),
@@ -137,7 +155,10 @@ EXIF_TAGS = {
     0x0119: ('MaxSampleValue', ),
     0x011A: ('XResolution', ),
     0x011B: ('YResolution', ),
-    0x011C: ('PlanarConfiguration', ),
+    0x011C: ('PlanarConfiguration', {
+        1 : 'Chunky',
+	    2 : 'Planar'
+    }),
     0x011D: ('PageName', make_string),
     0x011E: ('XPosition', ),
     0x011F: ('YPosition', ),
@@ -375,7 +396,13 @@ EXIF_TAGS = {
     0xA20C: ('SpatialFrequencyResponse', ),  # 0x920C
     0xA20E: ('FocalPlaneXResolution', ),     # 0x920E
     0xA20F: ('FocalPlaneYResolution', ),     # 0x920F
-    0xA210: ('FocalPlaneResolutionUnit', ),  # 0x9210
+    0xA210: ('FocalPlaneResolutionUnit', {
+        1 : 'None',
+        2 : 'inches',
+        3 : 'cm',
+        4 : 'mm',
+        5 : 'um'
+    }),  # 0x9210
     0xA214: ('SubjectLocation', ),           # 0x9214
     0xA215: ('ExposureIndex', ),             # 0x9215
     0xA217: ('SensingMethod', {              # 0x9217
