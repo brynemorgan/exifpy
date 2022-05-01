@@ -2,10 +2,10 @@ import re
 import struct
 from typing import BinaryIO, Dict, Any
 
-from exifread.exif_log import get_logger
-from exifread.utils import Ratio,dms_to_dd
-from exifread.tags import EXIF_TAGS, DEFAULT_STOP_TAG, FIELD_TYPES, IGNORE_TAGS, makernote
-from exifread.xmp import XMP
+from .exif_log import get_logger
+from .utils import Ratio,dms_to_dd
+from .tags import EXIF_TAGS, DEFAULT_STOP_TAG, FIELD_TYPES, IGNORE_TAGS, makernote
+from .xmp import XMP
 logger = get_logger()
 
 

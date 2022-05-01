@@ -5,14 +5,14 @@ Read Exif metadata from tiff and jpeg files.
 import struct
 from typing import BinaryIO
 
-from exifread.exif_log import get_logger
-from exifread.classes import ExifHeader
-from exifread.tags import DEFAULT_STOP_TAG
-from exifread.utils import ord_, make_string
-from exifread.heic import HEICExifFinder
-from exifread.jpeg import find_jpeg_exif
-from exifread.exceptions import InvalidExif, ExifNotFound
-from exifread.xmp import XMP
+from .exif_log import get_logger
+from .classes import ExifHeader
+from .tags import DEFAULT_STOP_TAG
+from .utils import ord_, make_string
+from .heic import HEICExifFinder
+from .jpeg import find_jpeg_exif
+from .exceptions import InvalidExif, ExifNotFound
+from .xmp import XMP
 
 __version__ = '3.0.0'
 

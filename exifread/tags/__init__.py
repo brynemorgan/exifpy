@@ -2,8 +2,8 @@
 Tag definitions
 """
 
-from exifread.tags.exif import EXIF_TAGS
-from exifread.tags.makernote import (
+from .exif import EXIF_TAGS
+from .makernote import (
     apple, canon, casio, fujifilm, nikon, olympus,
 )
 
