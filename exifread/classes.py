@@ -635,6 +635,6 @@ class ExifHeader:
         # Create XMP object
         self.xmp = XMP(xmp_bytes)
         # Get tags as dict
-        self.xmp_tags = {'XMP ' + k: v for k,v in self.xmp.tags.items()}
+        # self.xmp_tags = {'XMP ' + k: v for k,v in self.xmp.tags.items()}
         # Add to tags
-        return {**self.clean_tags(),**self.xmp_tags}
+        return {**self.clean_tags(),**self.xmp.tags}
