@@ -3,7 +3,7 @@ import struct
 from typing import BinaryIO, Dict, Any
 
 from exifread.exif_log import get_logger
-from exifread.utils import Ratio
+from exifread.utils import Ratio,dms_to_dd
 from exifread.tags import EXIF_TAGS, DEFAULT_STOP_TAG, FIELD_TYPES, IGNORE_TAGS, makernote
 from exifread.xmp import XMP
 logger = get_logger()
@@ -631,6 +631,10 @@ class ExifHeader:
         
         # clean_tags = {k.split(' ')[1]: v.values for k,v in self.tags.items()}
         clean_tags = {k.split(' ')[1]: XMP.format_object(v.printable) for k,v in self.tags.items()}
+
+        if clean_tags.get('GPSLatitude'):
+            clean_tags['GPSLatitude'] = dms_to_dd(clean_tags.get('GPSLatitude'))
+            clean_tags['GPSLongitude'] = dms_to_dd(clean_tags.get('GPSLongitude'))
 
         return clean_tags
     

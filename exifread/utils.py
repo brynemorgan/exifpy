@@ -81,6 +81,24 @@ def get_gps_coords(tags: dict) -> tuple:
     return (lat_coord, lng_coord)
 
 
+def dms_to_dd(dms):
+    """
+    Converts coordinate value from degrees, minutes, seconds to decimal degrees.
+
+    Parameters
+    ----------
+    dms : list
+        List of the form [deg, min, sec].
+
+    Returns
+    -------
+    dd : float
+        Coordinate in decimal degrees.
+    """
+    dd = dms[0] + float(dms[1])/60 + float(dms[2])/3600
+
+    return dd
+
 class Ratio(Fraction):
     """
     Ratio object that eventually will be able to reduce itself to lowest
