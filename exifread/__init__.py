@@ -8,7 +8,7 @@ from typing import BinaryIO
 from .exif_log import get_logger
 from .classes import ExifHeader
 from .tags import DEFAULT_STOP_TAG
-from .utils import ord_, make_string
+from .utils import ord_
 from .heic import HEICExifFinder
 from .jpeg import find_jpeg_exif
 from .exceptions import InvalidExif, ExifNotFound
