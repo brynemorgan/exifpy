@@ -1,5 +1,5 @@
 
-from exifread.utils import make_string, Ratio
+from ...utils import make_string, Ratio
 
 
 def ev_bias(seq) -> str:

@@ -1,5 +1,5 @@
 
-from exifread.utils import make_string
+from ...utils import make_string
 
 
 def special_mode(val):
