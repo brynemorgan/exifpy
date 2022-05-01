@@ -24,7 +24,10 @@ GPS_TAGS = {
     0x0002: ('GPSLatitude', ),
     0x0003: ('GPSLongitudeRef', ),
     0x0004: ('GPSLongitude', ),
-    0x0005: ('GPSAltitudeRef', ),
+    0x0005: ('GPSAltitudeRef', {
+        0 : 'Above Sea Level',
+	    1 : 'Below Sea Level'
+    }),
     0x0006: ('GPSAltitude', ),
     0x0007: ('GPSTimeStamp', ),
     0x0008: ('GPSSatellites', ),
