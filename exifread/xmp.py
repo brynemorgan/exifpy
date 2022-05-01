@@ -144,6 +144,31 @@ class XMP:
         except:
             return str(val)
 
+    # @staticmethod
+    # def format_object(obj):
+    #     """
+    #     Format the object of a graph. If the object is a single value, it will be
+    #     converted to a float or str. If it has multiple values, it will become a 
+    #     list of values.
+
+    #     Parameters
+    #     ----------
+    #     obj : rdflib.term.Literal
+    #         Object of an RDF graph.
+
+    #     Returns
+    #     -------
+    #     new_obj : str, float, list
+    #         Returns str or float if single value, otherwise a list of str and/or floats.
+    #     """
+        
+    #     new_obj = XMP.extract_literal(obj)
+    #     # Check if list
+    #     if isinstance(new_obj,str) and ',' in new_obj:
+    #         new_obj = [XMP.extract_literal(o) for o in new_obj.split(',')]
+
+    #     return new_obj
+
     @staticmethod
     def format_object(obj):
         """
@@ -161,11 +186,13 @@ class XMP:
         new_obj : str, float, list
             Returns str or float if single value, otherwise a list of str and/or floats.
         """
-        
-        new_obj = XMP.extract_literal(obj)
-        # Check if list
-        if isinstance(new_obj,str) and ',' in new_obj:
-            new_obj = [XMP.extract_literal(o) for o in new_obj.split(',')]
+        if isinstance(obj,list):
+            new_obj = [XMP.extract_literal(o) for o in obj]
+        else:
+            new_obj = XMP.extract_literal(obj)
+            # Check if list
+            if isinstance(new_obj,str) and ',' in new_obj:
+                new_obj = [XMP.extract_literal(o) for o in new_obj.split(',')]
 
         return new_obj
 

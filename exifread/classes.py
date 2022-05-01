@@ -258,14 +258,17 @@ class ExifHeader:
         # now 'values' is either a string, int/float, or array 
         # TODO: use only one type
         if count == 1 and field_type != 2:
-            printable = str(values)
+            # printable = str(values)
+            printable = values
         elif count > 50 and len(values) > 20 and not isinstance(values, str):
             if self.truncate_tags:
                 printable = str(values[0:20])[0:-1] + ', ... ]'
             else:
                 printable = str(values[0:-1])
+                printable = values[0:-1]
         else:
             printable = str(values)
+            printable = values
         # compute printable version of values
         if tag_entry:
             # optional 2nd tag element is present
@@ -626,7 +629,8 @@ class ExifHeader:
             _description_
         """
         
-        clean_tags = {k.split(' ')[1]: v.values for k,v in self.tags.items()}
+        # clean_tags = {k.split(' ')[1]: v.values for k,v in self.tags.items()}
+        clean_tags = {k.split(' ')[1]: XMP.format_object(v.printable) for k,v in self.tags.items()}
 
         return clean_tags
     

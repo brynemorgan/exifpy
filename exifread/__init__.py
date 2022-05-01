@@ -123,7 +123,7 @@ def _determine_type(fh: BinaryIO) -> tuple:
 
 def process_file(fh: BinaryIO, stop_tag=DEFAULT_STOP_TAG,
                  details=True, strict=False, debug=False,
-                 truncate_tags=True, auto_seek=True,
+                 truncate_tags=False, auto_seek=True,
                  xmp=True, clean=False):
     """
     Process an image file (expects an open file object).
