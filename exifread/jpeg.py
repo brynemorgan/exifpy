@@ -1,8 +1,8 @@
 from typing import BinaryIO
 
-from exifread.utils import ord_
-from exifread.exif_log import get_logger
-from exifread.exceptions import InvalidExif
+from .utils import ord_
+from .exif_log import get_logger
+from .exceptions import InvalidExif
 
 logger = get_logger()
 
