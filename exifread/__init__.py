@@ -75,8 +75,10 @@ def _get_xmp(fh: BinaryIO) -> bytes:
     xml_started = False
     xml_finished = False
     for line in fh:
-        open_tag = line.find(b'<x:xmpmeta')
-        close_tag = line.find(b'</x:xmpmeta>')
+        # open_tag = line.find(b'<x:xmpmeta')
+        # close_tag = line.find(b'</x:xmpmeta>')
+        open_tag = line.find(b'<rdf:RDF')
+        close_tag = line.find(b'</rdf:RDF>')
         if open_tag != -1:
             xml_started = True
             line = line[open_tag:]

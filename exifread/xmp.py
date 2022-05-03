@@ -12,7 +12,8 @@ class XMP:
         # Get RDF XML
         # NOTE: This seems to work for  a few different test files, but there may
         # very well be images out there with XMP metatdata not in RDF format.
-        self.rdf_str = ''.join(self.str.splitlines()[1:-1]).strip()
+        # self.rdf_str = ''.join(self.str.splitlines()[1:-1]).strip()
+        self.rdf_str = self.str
 
         self.graph = self._create_rdfgraph()
 
