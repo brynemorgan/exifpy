@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-import exifread
+# import exifread
 
 readme_file = open("README.rst", "rt").read()
 
@@ -10,7 +10,7 @@ dev_requirements = [
 
 setup(
     name="ExifRead",
-    version=exifread.__version__,
+    version='3.1.0',
     author="Ianaré Sévi",
     author_email="ianare@gmail.com",
     packages=find_packages(),
@@ -21,7 +21,7 @@ setup(
     url="https://github.com/ianare/exif-py",
     license="BSD",
     keywords="exif image metadata photo",
-    description=" ".join(exifread.__doc__.splitlines()).strip(),
+    description="Read Exif metadata from tiff and jpeg files.",
     long_description=readme_file,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
