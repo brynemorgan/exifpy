@@ -14,6 +14,7 @@ setup(
     author="Ianaré Sévi",
     author_email="ianare@gmail.com",
     packages=find_packages(),
+    requires=["rdflib"],
     scripts=["EXIF.py"],
     url="https://github.com/ianare/exif-py",
     license="BSD",

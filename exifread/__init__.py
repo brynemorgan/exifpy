@@ -14,7 +14,7 @@ from .jpeg import find_jpeg_exif
 from .exceptions import InvalidExif, ExifNotFound
 from .xmp import XMP
 
-__version__ = '3.0.0'
+__version__ = '3.1.0'
 
 logger = get_logger()
 

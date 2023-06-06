@@ -1,7 +1,9 @@
 ﻿**********
 Change Log
 **********
-
+3.1.0 - 2023-06-06
+    * Added support for FLIR and MicaSense images
+    
 3.0.0 — 2020-xx-xx
     * **BREAKING CHANGE:** Add type hints, which removes Python2 compatibility
     * Update make_string util to clean up bad values (#128) by Étienne Pelletier
