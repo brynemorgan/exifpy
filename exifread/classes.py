@@ -69,6 +69,8 @@ class ExifHeader:
         # TODO: get rid of 'Any' type
         self.tags = {}  # type: Dict[str, Any]
 
+    # TODO: Create IFD class?
+
     def s2n(self, offset, length: int, signed=False) -> int:
         """
         Convert slice to integer, based on sign and endian flags.
@@ -83,6 +85,7 @@ class ExifHeader:
         # Construct a format string from the requested length and signedness;
         # raise a ValueError if length is something silly like 3
         try:
+            # TODO: Move dict to top to improve readability. What do the values mean?
             fmt += {
                 (1, False): 'B',
                 (1, True):  'b',

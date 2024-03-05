@@ -3,13 +3,148 @@ Misc utilities.
 """
 
 from fractions import Fraction
-from typing import Union
+from typing import Union, BinaryIO
+import struct
+
+format_dict = {
+    (1, False): 'B',
+    (1, True):  'b',
+    (2, False): 'H',
+    (2, True):  'h',
+    (4, False): 'I',
+    (4, True):  'i',
+    (8, False): 'L',
+    (8, True):  'l',
+}
+
+def get_buffer(fh: BinaryIO, offset: int, n: int) -> bytes:
+    """
+    Read bytes from a file at a given position.
+
+    Parameters
+    ----------
+    fh : BinaryIO
+        file handler
+    offset : int
+        Start index for the stream.
+    n : int
+        Size of buffer (number of bytes to read)
+
+    Returns
+    -------
+    buffer : bytes
+        Bytes-like object containing the desired bytes.
+    """
+    # Set seek position to offset
+    fh.seek(offset)
+    # Read n bytes
+    buffer = fh.read(n)
+    return buffer
+
+
+def get_byte_format(endian, length: int, signed=False):
+    """
+    Get format character code for a bytes-like object.
+
+    Parameters
+    ----------
+    endian : int (?)
+        Bytes order.
+    length : int
+        Size (in bytes) of value.
+    signed : bool, optional
+        Whether the C-Type is signed or unsigned. The default is False (unsigned).
+
+    Returns
+    -------
+    byte_fmt : str
+        Format character code for a given byte order, size, and sign.
+
+    Raises
+    ------
+    ValueError
+        _description_
+    """
+    # Get byte order. Little-endian (<) if Intel, big-endian if Motorola.
+    byte_order = '<' if endian == 'I' else '>'
+    # Construct a format string from the requested length and signedness;
+    # raise a ValueError if length is something silly like 3
+    try:
+        byte_fmt = byte_order + format_dict[length,signed]
+    except KeyError as err:
+        raise ValueError('unexpected unpacking length: %d' % length) from err
+
+    return byte_fmt
+
+def bytes_to_decimal(fh, fh_offset, endian, offset, length: int, signed=False) -> int:
+
+    # Get byte format
+    byte_fmt = get_byte_format(endian, length, signed)
+    # Get bytes
+    buffer = get_buffer(fh, offset = fh_offset+offset, n = length)
+
+    # Unpack the buffer to a decimal
+    if buffer:
+        return struct.unpack(byte_fmt, buffer)[0]
+
+    return 0  
+
+def bytes_to_dec(byte_fmt, buffer) -> int:
+
+    # Unpack the buffer to a decimal
+    if buffer:
+        return struct.unpack(byte_fmt, buffer)[0]
+
+    return 0  
+
+
+def parse_bytes(endian, buffer, byte_fmt=None, signed=False) -> int:
+
+    if not byte_fmt:
+        byte_fmt = get_byte_format(endian, len(buffer), signed=signed)
+    # Unpack the buffer to a decimal
+    return struct.unpack(byte_fmt, buffer)[0]
+
+
 
 
 def ord_(dta):
     if isinstance(dta, str):
         return ord(dta)
     return dta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def make_string(seq: Union[bytes, list]) -> str:
     """
@@ -126,3 +261,6 @@ class Ratio(Fraction):
 
     def decimal(self) -> float:
         return float(self)
+
+
+
